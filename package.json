@@ -48,6 +48,8 @@
     "url-loader": "^1.0.1"
   },
   "dependencies": {
+    "@google-cloud/vision": "^0.16.0",
+    "google-cloud": "^0.57.0",
     "truffle-hdwallet-provider": "0.0.3",
     "uport-connect": "^0.7.1"
   },
