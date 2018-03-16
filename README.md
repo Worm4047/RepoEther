@@ -1,2 +1,2 @@
 # RepoEther
-An open, decentralized complaint lodging system that addresses critical issues like transparency.
+An open complaint system that uses decentralization to address the issues of transparency and provides incentives to common man. 
