@@ -18,7 +18,7 @@ var Reporter = contract(reporter_artifacts);
 window.registerComplaint = function(form) {
   console.log(form);
   let complaint = $('#complaint').val();
-  let contact_info = $('#contact_info').val();
+  let contact_info = parseInt($('#contact_info').val());
   let crime_date = $('#crime_date').val();
   let type_of_complaint = parseInt($('#type_of_complaint').val());
   let complaint_visibility = $('#complaint_visibility').val() == 'on'?1:0;
@@ -43,7 +43,7 @@ window.registerComplaint = function(form) {
 window.displayComplaints = function(){
 
   console.log("HEllo");
-  let $div = $("#div");
+  var stri = '';
   let fields = ['id', 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'location'];
   let complaints = {};
   Reporter.deployed().then(function(contractInstance){
@@ -55,7 +55,7 @@ window.displayComplaints = function(){
         for(let j=0;j<fields.length;j++){
 
           obj[fields[j]] = res[j][i].toString();
-
+            if(j==2 || j== 2 || j==6)
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
 
         }
