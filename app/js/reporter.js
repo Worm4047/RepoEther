@@ -26,12 +26,15 @@ window.registerComplaint = function(form) {
   let location = 'allahabad'; 
   let admin = '0x627306090abaB3A6e1400e9345bC60c78a8BEf57';
   console.log(type_of_complaint, complaint_visibility, admin, complaint, contact_info, crime_time);
+  console.log("ip1=" + ip1 )
   // console.log(title, typeof(visibility), typeof(type), admin);
   // console.log(web3.eth.accounts[0]);
   //uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location
+  
+
   Reporter.deployed().then(function(contractInstance){
     console.log(contractInstance);
-    contractInstance.register_complaint(type_of_complaint, complaint_visibility, complaint, contact_info, crime_time,location,{gas: 1400000, from: web3.eth.accounts[0]})
+    contractInstance.register_complaint(type_of_complaint, complaint_visibility, complaint, contact_info, crime_time,location,ip1,ip2,{gas: 1400000, from: web3.eth.accounts[0]})
     .then(function(){
       console.log("Complaint registered");
       displayComplaints();
@@ -46,35 +49,53 @@ window.displayComplaints = function(){
 
   console.log("HEllo");
   let $div = $("#div");
-  let fields = [ 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'crime_time'];
+  let fields = [ 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'crime_time','ip1','ip2'];
   let complaints = {};
   Reporter.deployed().then(function(contractInstance){
     contractInstance.get_all_complaints.call()
     .then(function(res){
-      console.log(res);
-      for(let i=0;i<res[i].length;i++){
+      // console.log(res);
+      contractInstance.get_ip2.call()
+      .then(function(res2){
+        console.log("res",res[0].length, res2);
+        // console.log("res2",res2);
+        for(let i=0;i<res[0].length;i++){
         let obj = {};
         for(let j=0;j<fields.length;j++){
-
-          obj[fields[j]] = res[j][i].toString();
-            if(j==5 || j==1)
-            obj[fields[j]] = web3.toAscii(obj[fields[j]]);
-
+           if(j == fields.length-1){
+             obj[fields[j]] = web3.toAscii(res2[i]);
+           }else{
+            //console.log("tes",res[i][j])
+            obj[fields[j]] = res[j][i];
+            //console.log(obj);
+             if(j==1 || j == fields.length-2)
+               obj[fields[j]] = web3.toAscii(obj[fields[j]]);
+            }
         }
         complaints[i]=obj;
       }
+    })
+
+  });
+      
+});
+      console.log("Complaints",complaints['admin']);
+      
+
       var status='Pending';
       var stakes=0;
       var id=0
       var total_str='';
+      console.log("ssasc");
       for(var key in complaints){
         let address = complaints[key].admin;
         let title = complaints[key].title;
+        console.log("title",title);
         let contact_info = complaints[key].contact_info;
         let visibility = complaints[key].visibility;
         let type_of_complaint = complaints[key].type_of_complaint;
         let crime_date = complaints[key].crime_time;
-        console.log(complaints[key]);
+        console.log("compkey:",complaints[key]);
         var str = `
             <div class="col m-t-20 complaint_card">
               <div class="card horizontal">
@@ -110,9 +131,8 @@ window.displayComplaints = function(){
             `;
           total_str += str;
       }
+     console.log("total_str",total_str);
       $('.complaints').html(total_str);
-    })
-  })
 }
 
 
