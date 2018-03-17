@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
 	<title>Dashboard</title>
 	<meta charset="UTF-8">
@@ -28,46 +30,46 @@
 		    <form class="col s12">
 		      <div class="row">
 		        <div class="input-field col s12">
-		          <textarea id="complaint" class="materialize-textarea"></textarea>
-		          <label for="text">Complaint</label>
+		          <textarea id="textarea1" class="materialize-textarea"></textarea>
+		          <label for="textarea1">Complaint Description</label>
 		        </div>
 		        <div class="input-field col s12">
-		          <input id="phone" type="email" class="validate">
-		          <label for="email" data-error="wrong" data-success="right">Phone</label>
+		          <input id="email" type="email" class="validate">
+		          <label for="email" data-error="wrong" data-success="right">Email</label>
 		        </div>	
-
-    <div class="file-field input-field">
-      <div class="btn">
-        <span>Upload Document</span>
-        <input type="file">
-      </div>
-      <div class="file-path-wrapper">
-        <input class="file-path validate" type="text">
-      </div>
-    </div>
-
-		           <div class="input-field col s12">
-		          <input type="text" id="doc" class="materialize-textarea"></input>
-		          <label >Upload a Document</label>
-		        </div>  
-
-		        		           <div class="input-field col s12">
-		          <input type="text" id="doc" class="materialize-textarea"></input>
-		          <label >Upload a Document</label>
-		        </div>
-
-		        		           <div class="input-field col s12">
-		          <input type="text" id="doc" class="materialize-textarea"></input>
-		          <label >Upload a Document</label>
-		        </div>
-
-		        		           <div class="input-field col s12">
-		          <input type="text" id="doc" class="materialize-textarea"></input>
-		          <label >Upload a Document</label>
-		        </div>
-
+		        <label for="crime-date">Date of Crime</label>
+		        <input id="crime-date" type="text" class="datepicker">
+    			<div class="input-field col s12">
+    			<select>
+      				<option value="" disabled selected>Type of Complaint</option>
+				    <option value="1">Criminal</option>
+				    <option value="2">Legal</option>
+				    <option value="3">Rape / Harrasment </option>
+				</select>
+			</div>
+    			<label>Complaint type</label>
+    			<div class="switch">
+    <label>
+      Off
+      <input type="checkbox">
+      <span class="lever"></span>
+      On
+    </label>
+  </div>	        
 		      </div>
-		    </form>
+    		<div class="file-field input-field">
+      			<div class="btn">
+        		<span>Upload Evidence</span>
+        		<input type="file">
+      			</div>
+     		 <div class="file-path-wrapper">
+        			<input class="file-path validate" type="text">
+      		</div>
+    		</div>
+
+    		<label for="crime-time">Time of Crime</label>
+    		 <input type="text" class="timepicker">
+				    </form>
 		</div>
     </div>
     <div class="modal-footer">
@@ -186,9 +188,31 @@
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   	<script>
+  		$(document).ready(function() {
+    		$('select').material_select();
+  		});
   		$(".button-collapse").sideNav();
   		$('.modal').modal();
   		$('#textarea1').trigger('autoresize');
+  		$('.datepicker').pickadate({
+    		selectMonths: true, // Creates a dropdown to control month
+		    selectYears: 15, // Creates a dropdown of 15 years to control year,
+		    today: 'Today',
+		    clear: 'Clear',
+		    close: 'Ok',
+		    closeOnSelect: false // Close upon selecting a date,
+  		});
+  		$('.timepicker').pickatime({
+    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+    twelvehour: false, // Use AM/PM or 24-hour format
+    donetext: 'OK', // text for done-button
+    cleartext: 'Clear', // text for clear-button
+    canceltext: 'Cancel', // Text for cancel-button
+    autoclose: false, // automatic close timepicker
+    ampmclickable: true, // make AM PM clickable
+    aftershow: function(){} //Function for after opening timepicker
+  });
   	</script>
   	 <script src="app.js"></script>
   	 <script type="text/javascript">
