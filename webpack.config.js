@@ -10,7 +10,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       { from: './app/index.html', to: "index.html" },
-      { from: './app/dashboard.html', to: "dashboard.html" }
+      { from: './app/dashboard.html', to: "dashboard.html" },
+      { from: './app/profile.html', to: "profile.html" }
           ])
   ],
   module: {

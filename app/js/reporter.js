@@ -1,6 +1,6 @@
 // Import the page's CSS. Webpack will know what to do with it.
 // import "../stylesheets/app.css";
-// import "../css/main.css";
+import "../css/main.css";
 import "../css/util.css";
 import "../css/dashboard.css";
 
@@ -20,11 +20,12 @@ window.registerComplaint = function(form) {
   let complaint = $('#complaint').val();
   let contact_info = $('#contact_info').val();
   let crime_date = $('#crime_date').val();
-  let type_of_compliant = parseInt($('#type_of_complaint').val());
+  let type_of_complaint = parseInt($('#type_of_complaint').val());
   let complaint_visibility = $('#complaint_visibility').val() == 'on'?1:0;
-  let crime_time = $('#time_of_crime');
+  let crime_time = $('#time_of_crime').val();
   let location = 'allahabad'; 
   let admin = '0x627306090abaB3A6e1400e9345bC60c78a8BEf57';
+  console.log(type_of_complaint, complaint_visibility, admin, complaint, contact_info, crime_time);
   // console.log(title, typeof(visibility), typeof(type), admin);
   // console.log(web3.eth.accounts[0]);
   //uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location
@@ -40,9 +41,10 @@ window.registerComplaint = function(form) {
   })
 }
 window.displayComplaints = function(){
+
   console.log("HEllo");
   let $div = $("#div");
-  let fields = ['id','title','contact_info','type_of_complaint','visibility'];
+  let fields = ['id', 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'location'];
   let complaints = {};
   Reporter.deployed().then(function(contractInstance){
     contractInstance.get_all_complaints.call()
@@ -53,11 +55,9 @@ window.displayComplaints = function(){
         for(let j=0;j<fields.length;j++){
 
           obj[fields[j]] = res[j][i].toString();
-          if ( j==1 || j==2)
-          {
+
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
-          }
-          //console.log(i,j, obj[fields[j]]);
+
         }
         complaints[i]=obj;
       }
@@ -81,6 +81,4 @@ $( document ).ready(function() {
 
   Reporter.setProvider(web3.currentProvider);
   console.log(web3.currentProvider);
-
-
 });

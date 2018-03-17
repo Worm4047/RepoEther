@@ -8,7 +8,7 @@ contract Reporter {
         address admin; //adhaar card of person registering complaint.
         bytes32 complaint;
         bytes32 contact_info;
-        string address_info;
+        // string address_info;
         string proposed_solution;
         // bytes32 documents;
         uint status;//0-> pending/open 1-> in process 2->closed/resolved
@@ -55,11 +55,11 @@ contract Reporter {
     }
     
 // uint id,string documents,uint type_of_complaint, uint visibility,  bytes32 admin, string title, string contact_info, string address_info, uint256 time, string location
-    function register_complaint(uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location) public payable{
+    function register_complaint(uint type_of_complaint, uint visibility, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location) public payable{
         Complaint memory newcomplaint;
         uint id = all_complaints.length+1;
         newcomplaint.id = id;
-        newcomplaint.admin = admin;
+        newcomplaint.admin = msg.sender;
         newcomplaint.complaint = bytes32(complaint);
         newcomplaint.contact_info = contact_info;
         newcomplaint.proposed_solution = '';
@@ -73,7 +73,7 @@ contract Reporter {
         newcomplaint.crime_time = crime_time;
 
         //Add this complaint to array of lodged complaints by the adhaar number
-        lodged_complaints[admin].push(id);
+        lodged_complaints[msg.sender].push(id);
         //Add this complaint to array of all complaints
         all_complaints.push(newcomplaint);
 
