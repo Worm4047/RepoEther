@@ -31,7 +31,7 @@ window.registerComplaint = function(form) {
   //uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location
   Reporter.deployed().then(function(contractInstance){
     console.log(contractInstance);
-    contractInstance.register_complaint(type_of_complaint, complaint_visibility, admin, complaint, contact_info, crime_time,{gas: 1400000, from: web3.eth.accounts[0]})
+    contractInstance.register_complaint(type_of_complaint, complaint_visibility, complaint, contact_info, crime_time,location,{gas: 1400000, from: web3.eth.accounts[0]})
     .then(function(){
       console.log("Complaint registered");
     })
@@ -40,6 +40,7 @@ window.registerComplaint = function(form) {
     })
   })
 }
+
 window.displayComplaints = function(){
 
   console.log("HEllo");
@@ -55,7 +56,7 @@ window.displayComplaints = function(){
         for(let j=0;j<fields.length;j++){
 
           obj[fields[j]] = res[j][i].toString();
-
+            if(j==6 || j==2)
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
 
         }

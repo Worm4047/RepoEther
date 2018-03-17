@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "skilled-compass-197517",
+  "private_key_id": "676de248f4aaf0ac5be9a939ba0a23d0194c9c6b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSCyax62Bj8K2B\n/NKdEZFM3Yx/I3Hz8pjD2NB4639GxeR7sx4HGiQCWnE/G1YBGA3orfrbeE5VB4/d\nK8zxDvxtbdXXe39/c0l9ZgYUTzLv2vgvJSPUmhtUhcP46AxE6OC8upWvLUtnEh+v\nuOIRLh6EBvuQ2L9BZw+ikY9dZQMHJA1g60zqZOP7AtX4Q3PZV24I0P5Gt6lGdR1J\n8cpI8bE/RGB+ujKQwaudvahrF1KO4CLipbMNGRT3B+RRsoNmhC28aXYEeOaFDHwd\n2e4OTWc6KowkxIchF+GdTdarLEJ4EezYstUeELHeSGTCNN+tP/CaVNQx1LOZNJBk\nY4WSfNUJAgMBAAECggEAF7FTUZFz44IUCEwc88O2CJ4bCYJVicdtLPZJecJSroiG\n/98R/YoY0r0h9hTezCvK8dqiJ9x3tYavVyroKK7gkXVowDA5jwZRnVgDSooufDjO\ncv70/jfN6mhWVT7Tl3hPVWqUlNh+n2c/dMJdmcOChLEG8m1IkZeO/2785XON9mGJ\nyIjhDwmWYYrq+1FjmW1Lraf3u/Y31J0z4YMZlddKBmLUe5bEaoyp6RuSghJyzth+\n7OFK+xiUR+irOdyooKa7OUi/PAy+lN6tL6GFNm3hne3Ql50NvJAmqLmwfyaiv+in\n1M3CswxyDO68Q7POK4gt21OBmlJehUW4fjhvmb9iCQKBgQD2xd+jOq5fDR2X2Knh\nTfCmu1shzkOQTxuuCwPraCYpV9dPf8iYn1GuL706HnbmZcVnzP0v1AkRRCS/zBw4\nkYrlzp6FCj9kh0UUxLeWPdxl5t3APAHPy4Z4SEl1aE/cSAfgGx0Xwsi8/VIMzG9D\nPKjmsx4GZ5/gZr1nu+O3kQKHHQKBgQDZ5bOYpsYAZZ4GnwY52NHeAQcROzZpc5Cd\n/Qv+vU3P+sn/7R49JFKx0tx7MaJiG5ab8IKmW8tHXZiY+vxYrE5aZz12CCESbYUe\n24rcYODtPypJjFiiHpjmrbWAzAq4RpqRh482PPUwK0SH1nbZq7VGNeowKVXH1Wyo\nJkJplzMl3QKBgCjhhPf8m7CBcrqaGSKLD+f/N8y05/p7MIG3r3GLMm887x1rdObb\n1eM+Y2HCdD4c9AQLMJKA1PO4T0I65R319oW1ogs2NGRKCIa1RBiurNlw0qGrDz3G\nYMOCbjD2E+zRPgTBWSN7kFfGu5YFNBV2ciCt4bZ76j95pb0Ool3htwJ9AoGAa/Fg\n4RRtLjEo8brByNJiVQpJR/3/XIoFcF61HIMHEyr3+rKqsjtWRAVjeBwEh3mHSMUC\n1ArRTw9M0ywy6nKhdiOCzQAF8i0TL1AvIDFV+/G4ryq5lcZ2lIAlVCLAhL1lQQbY\nqVPVWwF0N57EzdxENv3qf+VaO169LyeU6t4eVnkCgYEA569DqqHSAtzqQJK2YoBa\nzUVX9mAGqUpRoh1Tjwn4zcmiLDCtg1NBs+4CWYQQzClSDBI45BMQzv3HSodbTyTN\nqQbgX3vIro/h3KBgo6vF8Hy7vlc0s/yEFgIFVv/rl502S2YHNAgSPbAqCJpMhSL0\n4j+JVsgjjh0A2kWAJgDagbc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "api-hint-vision@skilled-compass-197517.iam.gserviceaccount.com",
+  "client_id": "114632829958040073861",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/api-hint-vision%40skilled-compass-197517.iam.gserviceaccount.com"
+}
