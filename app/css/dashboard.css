@@ -6,20 +6,17 @@ body {
     background-color: #443d5d;
 }
 .container{
-	min-width: 95vw;
+	min-width: 60vw;
 	min-height: 90vh;
 	background-color: #ffffff;
 	border: 1px solid #e6e6e6;
 	border-radius: 3px;
-	padding-left:10px;
-	padding-top: 10px;
 }
 .container-title{
 	border-bottom: 1px solid #efefef;
 	padding: 6px;
 }
-.container-title h4{
-	padding-top: 10px;
+.container-title h2{
 	font-weight: 300;
 }
 
@@ -49,7 +46,6 @@ span.badge{
     line-height: 30px;
     border-radius: 2px;
     color:white;
-
 }
 
 

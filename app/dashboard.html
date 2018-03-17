@@ -15,10 +15,8 @@
   	<link rel="stylesheet" href="./css/dashboard.css">
 
     <script src="https://www.thomasfrank.se/sessvars.js"></script>
-        <script src="https://wzrd.in/standalone/buffer"></script>
-    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
-    integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
-    crossorigin="anonymous"></script>
+    <script src="https://wzrd.in/standalone/buffer"></script>
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"></script>
 
 
 </head>
@@ -33,16 +31,18 @@
 		    <form class="col s12" onsubmit="registerComplaint();return false;">
 		      	<div class="row">
 			        <div class="input-field col s12">
-			          <textarea id="complaint" class="materialize-textarea"></textarea>
+			          <textarea id="complaint" class="materialize-textarea" rows="3"></textarea>
 			          <label for="textarea1">Complaint Description</label>
 			        </div>
-			        <div class="input-field col s12">
+			        <div class="input-field col l6 m6 s12">
 			          <input id="contact_info" type="text" class="validate">
 			          <label for="email" data-error="wrong" data-success="right">Phone no.</label>
 			        </div>	
-			        <label for="crime-date">Date of Crime</label>
-			        <input id="crime_date" type="text" class="datepicker">
-	    			<div class="input-field col s12">
+			        <div class="input-field col l6 m6 s12">
+				        <label for="crime-date">Date of Crime</label>
+				        <input id="crime_date" type="text" class="datepicker">
+				    </div>
+	    			<div class="input-field col l12 m12 s12">
 		    			<select id="type_of_complaint">
 		      				<option value="" disabled selected>Type of Complaint</option>
 						    <option value="1">Criminal</option>
@@ -50,16 +50,14 @@
 						    <option value="3">Rape / Harrasment </option>
 						</select>
 					</div>
-	    			<label>Complaint Visibility</label>
-	    			<div class="switch">
-					    <label>
-					      Off
-					      <input type="checkbox" id="complaint_visibility">
-					      <span class="lever"></span>
-					      On
-					    </label>
+	    			<div class="input-field col l12 m12 s12">
+		    			<select id="complaint_visibility">
+		      				<option value="" disabled selected>Complaint visibility</option>
+						    <option value="on">Public</option>
+						    <option value="off">Private</option>
+						</select>
 					</div>
-		    		<div class="file-field input-field">
+<!-- 		    		<div class="file-field input-field col l12 m12 s12">
 		      			<div class="btn">
 			        		<span>Upload Evidence</span>
 			        		<input type="file" id="documents" name="documents">
@@ -67,14 +65,16 @@
 		     			<div class="file-path-wrapper">
 		        			<input class="file-path validate" type="text" id="documents">
 		      			</div>
-		    		</div>		        
+		    		</div> -->		        
 				</div>
 
 				<div>
 					<button class="btn" onclick="getLocation()">Auto detect location</button>
 				</div>
-    			<label for="crime-time">Time of Crime</label>
-    		 	<input type="text" class="timepicker" id="time_of_crime">
+				<div class="input-field col l12 m12 s12">
+	    			<label for="crime-time">Time of Crime</label>
+	    		 	<input type="text" class="timepicker" id="time_of_crime">
+	    		</div>
     		 	<input type="submit" class="btn">
 			</form>
 		</div>	
@@ -91,10 +91,9 @@
 		  <ul class="right hide-on-med-and-down">
 		    <li><a class="waves-effect waves-light fs-22 modal-trigger" href="#complaint-filing">File a complaint</a></li>
 		    <li><a class="waves-effect waves-light fs-22">Your complaints</a></li>
-		    <li><a href="collapsible.html" class="waves-effect waves-light fs-22">Javascript</a></li>
 		  </ul>
 		  <ul class="side-nav" id="mobile-demo">
-		    <li class="p-t-20"><a class="waves-effect waves-light fs-22">File a complaint</a></li>
+		    <li class="p-t-20"><a class="waves-effect waves-light fs-22 modal-trigger" href="#complaint-filing>File a complaint</a></li>
 		    <li class="p-t-20"><a class="waves-effect waves-light fs-22">Your complaints</a></li>
 		  </ul>
 		</div>
@@ -107,15 +106,15 @@
 						<h4> Top Performers </h4>
 					</div>
 					<ul class="collection top_performers with-header m-t-20">
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station A<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station B<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station C<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station D<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station E<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station F<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station G<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station H<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station I<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
 					</ul>
 				</div>
 				<div class="col l9 col m7 col s12">
@@ -198,14 +197,14 @@
 
 	function getLocation() {
 	    if (navigator.geolocation) {
-	        navigator.geolocation.getCurrentPosition(showPosition);
+	        return navigator.geolocation.getCurrentPosition(showPosition);
 	    } else { 
 	        console.log("Geolocation is not supported by this browser.");
 	    }
 	}
 
 function showPosition(position) {
-    console.log(position.coords.latitude);
+    return position.coords.latitude;
 
 }
 </script>
