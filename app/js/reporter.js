@@ -295,7 +295,7 @@ window.registerComplaint = function(form) {
   let contact_info = $('#contact_info').val();
   let crime_date = $("#crime_date").val();
   let type_of_complaint = $("#type_of_complaint").val();
-  let complaint_visibility = $('#complaint_visibility').val();
+  let complaint_visibility = $('#complaint_visibility').val() === 'on'?1:0;
   let documents = $('#documents').val();
   let time_of_crime = $('#time_of_crime').val();
   let admin = decodedId;
