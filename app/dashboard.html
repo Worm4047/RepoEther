@@ -27,31 +27,31 @@
     <div class="modal-content">
       <h4>Register your complaint</h4>
         <div class="row">
-		    <form class="col s12">
+		    <form class="col s12" onsubmit="registerComplaint();return false;">
 		      <div class="row">
 		        <div class="input-field col s12">
-		          <textarea id="textarea1" class="materialize-textarea"></textarea>
+		          <textarea id="complaint" class="materialize-textarea"></textarea>
 		          <label for="textarea1">Complaint Description</label>
 		        </div>
 		        <div class="input-field col s12">
-		          <input id="email" type="email" class="validate">
-		          <label for="email" data-error="wrong" data-success="right">Email</label>
+		          <input id="contact_info" type="text" class="validate">
+		          <label for="email" data-error="wrong" data-success="right">Phone no.</label>
 		        </div>	
 		        <label for="crime-date">Date of Crime</label>
-		        <input id="crime-date" type="text" class="datepicker">
+		        <input id="crime_date" type="text" class="datepicker">
     			<div class="input-field col s12">
-    			<select>
+    			<select id="type_of_complaint">
       				<option value="" disabled selected>Type of Complaint</option>
 				    <option value="1">Criminal</option>
 				    <option value="2">Legal</option>
 				    <option value="3">Rape / Harrasment </option>
 				</select>
 			</div>
-    			<label>Complaint type</label>
+    			<label>Complaint Visibility</label>
     			<div class="switch">
     <label>
       Off
-      <input type="checkbox">
+      <input type="checkbox" id="complaint_visibility">
       <span class="lever"></span>
       On
     </label>
@@ -60,15 +60,16 @@
     		<div class="file-field input-field">
       			<div class="btn">
         		<span>Upload Evidence</span>
-        		<input type="file">
+        		<input type="file" >
       			</div>
      		 <div class="file-path-wrapper">
-        			<input class="file-path validate" type="text">
+        			<input class="file-path validate" type="text" id="documents">
       		</div>
     		</div>
 
     		<label for="crime-time">Time of Crime</label>
-    		 <input type="text" class="timepicker">
+    		 <input type="text" class="timepicker" id="time_of_crime">
+    		 <input type="submit" class="btn">
 				    </form>
 		</div>
     </div>
