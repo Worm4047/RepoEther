@@ -197,16 +197,16 @@
 
 	function getLocation() {
 	    if (navigator.geolocation) {
-	        return navigator.geolocation.getCurrentPosition(showPosition);
+	        navigator.geolocation.getCurrentPosition(showPosition);
 	    } else { 
 	        console.log("Geolocation is not supported by this browser.");
 	    }
 	}
 
-function showPosition(position) {
-    return position.coords.latitude;
+	function showPosition(position) {
+	    console.log(position.coords.latitude);
 
-}
+	}
 </script>
 
 

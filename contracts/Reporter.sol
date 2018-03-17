@@ -55,7 +55,7 @@ contract Reporter {
     }
     
 // uint id,string documents,uint type_of_complaint, uint visibility,  bytes32 admin, string title, string contact_info, string address_info, uint256 time, string location
-    function register_complaint(uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location) public{
+    function register_complaint(uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location) public payable{
         Complaint memory newcomplaint;
         uint id = all_complaints.length+1;
         newcomplaint.id = id;

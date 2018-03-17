@@ -17,15 +17,20 @@ var Reporter = contract(reporter_artifacts);
 
 window.registerComplaint = function(form) {
   console.log(form);
-  let title = $('#title').val();
-  let visibility = parseInt($("#visibility").val());
-  let type = parseInt($("#type_of_crime").val());
-  let admin = $("#admin").val();
+  let complaint = $('#complaint').val();
+  let contact_info = $('#contact_info').val();
+  let crime_date = $('#crime_date').val();
+  let type_of_compliant = parseInt($('#type_of_complaint').val());
+  let complaint_visibility = $('#complaint_visibility').val() == 'on'?1:0;
+  let crime_time = $('#time_of_crime');
+  let location = 'allahabad'; 
+  let admin = '0x627306090abaB3A6e1400e9345bC60c78a8BEf57';
   // console.log(title, typeof(visibility), typeof(type), admin);
   // console.log(web3.eth.accounts[0]);
+  //uint type_of_complaint, uint visibility,  address admin, bytes32 complaint, bytes32 contact_info, bytes32 crime_time, bytes32 location
   Reporter.deployed().then(function(contractInstance){
     console.log(contractInstance);
-    contractInstance.register_complaint(type, visibility, admin, title,{gas: 1400000, from: web3.eth.accounts[0]})
+    contractInstance.register_complaint(type_of_complaint, complaint_visibility, admin, complaint, contact_info, crime_time,{gas: 1400000, from: web3.eth.accounts[0]})
     .then(function(){
       console.log("Complaint registered");
     })
