@@ -3,6 +3,14 @@ pragma experimental ABIEncoderV2;
 
 contract Reporter {
 
+    struct Stake{
+        uint id;
+        uint value;
+        uint opinion; //1=>in support of , 0 => against
+    }
+
+
+    mapping(uint => Stake[]) complaint_stakes;
     struct Complaint {
         uint id;
         address admin; //adhaar card of person registering complaint.
@@ -20,12 +28,19 @@ contract Reporter {
         uint type_of_complaint;// 0-> criminal cases eg(Theft) 1->civil cases( Consumer court )2->enforcement( debt issue )
         bytes32 crime_time;
     }
-    //Mapping of adhaar card to array of complaint id;
-    mapping(address => uint[]) public solved_complaints;
-
+    //Mapping of address to array of complaint id;
+    mapping(address => uint[]) public solved_complaints; //solved by me
     //Mapping of adhaar card to array of lodged solved_complaints
     //To retreive complaints a person has lodged
-    mapping(address => uint[]) public lodged_complaints;
+    mapping(address => uint[]) public lodged_complaints; // lodged by me
+    mapping(address => uint[]) public process_complaints; //under me
+
+    mapping(uint => )
+
+    //Police officials list
+    address[] police_list;
+    police_list[0] = '0x870d3e9c4e7edce6436bc5c3d4194967155616ae';;
+    police_list[1] = '0x08eebb4fd9b3436baf4cadb9105b73acc015ee65';
 
     //All complaints
     Complaint[] all_complaints;
@@ -64,7 +79,7 @@ contract Reporter {
             crime_time[i] = c.crime_time;
         }
 
-        return(admin, title, contact_info, type_of_complaint, visibility, crime_time);
+        return(admin, stationtitle, contact_info, type_of_complaint, visibility, crime_time);
     }
     
 // uint id,string documents,uint type_of_complaint, uint visibility,  bytes32 admin, string title, string contact_info, string address_info, uint256 time, string location
@@ -91,5 +106,37 @@ contract Reporter {
         all_complaints.push(newcomplaint);
 
     }
+
+    function accept_complaint(address police, uint id) public{
+        process_complaints[police].push(id);Complaint memory newcomplaint;
+        all_complaints[id].status = 1;//in process
+    }
+
+    function raise_stakes(address addr, uint id, uint amt, uint opinion){
+        Stake memory newstake;
+        newstake.addr = addr;
+        newstake.stake = 0;
+        newstake.opinion = opinion;
+        complaint_stakes[id] = newstake;
+    }
+
+    function returnTotalStakes(uint id) public {
+        uint256 totalStakes = 0;
+        for(uint i = 0 ; i < complaint_stakes[id].length ; i++){
+            totalStakes += complaint_stakes[id][i].value;
+        } 
+        return totalStakes;
+    }
+
+    function proposed_solution(bytes32 proposed_solution,uint id) public{
+        solved_by = bytes32(msg.sender);
+        all_complaints[id].proposed_solution = proposed_solution;
+        all_complaints[id].status = 1;
+    }
+
+    function closeComplain(address admin,uint id,uint status) public{
+        all_complaints[id].status = status;
+    }
+
 
 }

@@ -15,3 +15,9 @@ var server = app.listen(app.get('port'), function() {
 router.get('/dashboard.html', function (req, res) {
   res.render('dashboard.html');
 })
+
+//My complaints page
+// Home page route.
+router.get('/my_complaints.html', function (req, res) {
+  res.render('my_complaints.html');
+})

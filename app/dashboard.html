@@ -102,23 +102,19 @@
 		<div class="container">
 			<div class="row">
 				<div class="col l3 col m5 col s12 ">
-					<div class="container-title text-center">
+					<div class="container-title text-center m-t-20">
 						<h4> Top Performers </h4>
 					</div>
 					<ul class="collection top_performers with-header m-t-20">
-						<li class="collection-item"><div>Police station A<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station B<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station C<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station D<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station E<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station F<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station G<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station H<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-						<li class="collection-item"><div>Police station I<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+						<li class="collection-item"><div>Police station A<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div>Police station B<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div>Police station C<a href="#!" class="secondary-content"></a></div></li>
+						<li class="collection-item"><div>Police station D<a href="#!" class="secondary-content"></a></div></li>
+
 					</ul>
 				</div>
 				<div class="col l9 col m7 col s12">
-					<div class="container-title text-center">
+					<div class="container-title text-center m-t-20">
 						<h4> Complaints </h4>
 					</div>
 					<div class="complaints">
@@ -145,6 +141,12 @@
 
     	function showPosition(position) {
 	    	console.log(position.coords.latitude);
+	    	swal({
+				  title: "Sweet",
+				  text: "We got your location",
+				  icon: "success",
+				  button: "Aww yiss!",
+				});
 
 		}
 	}
@@ -187,7 +189,7 @@
   	 <script type="text/javascript">
   	 console.log(sessvars.userProfile );
   	 </script>
-
+  	 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script src="app.js"></script>
 

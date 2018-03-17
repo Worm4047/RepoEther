@@ -6,7 +6,7 @@ body {
     background-color: #443d5d;
 }
 .container{
-	min-width: 60vw;
+	min-width: 90vw;
 	min-height: 90vh;
 	background-color: #ffffff;
 	border: 1px solid #e6e6e6;
@@ -41,6 +41,12 @@ body {
 	font-weight: bold;
 }
 
+.complaint_description{
+	line-height: 24px;
+	font-size: 24px;
+	margin-top: 10px;
+}
+
 span.badge{
 	height: 30px;
     line-height: 30px;
@@ -48,7 +54,9 @@ span.badge{
     color:white;
 }
 
-
+span.title{
+	font-weight: 300px;
+}
 
 .red{
 	background-color: red;
