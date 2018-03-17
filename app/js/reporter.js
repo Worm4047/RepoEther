@@ -293,7 +293,7 @@ $( document ).ready(function() {
 
   Reporter.setProvider(web3.currentProvider);
   console.log(web3.currentProvider);
-  $('accept_complaint').click(function(event){
+  $('.complaint.accept_complaint').click(function(event){
     accept_complaint(event.target);
   })
 
