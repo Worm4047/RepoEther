@@ -20,8 +20,8 @@
 
 
 </head>
-<body>
-<button class="btn" onclick="displayComplaints();return false;"> Display</button>
+<body onload="displayComplaints();return false;">
+<!-- <button class="btn" onclick="displayComplaints();return false;"> Display</button> -->
 
   <!-- Modal Structure -->
   <div id="complaint-filing" class="modal modal-fixed-footer">
@@ -122,59 +122,26 @@
 						<h4> Complaints </h4>
 					</div>
 					<div class="complaints">
-						<div class="col m-t-20">
+						<div class="col m-t-20 complaint_card">
 							<div class="card horizontal">
-
 							  <div class="card-stacked">
 							    <div class="card-content fs-20">
 							      <p class="complaint-title fs-24">
-							      	<span class=="title">Complaint title</span> 
-							      	<span class="badge right red">Query</span>
-							      	<span class="badge right green">Lost</span>
-							      	<span class="badge right orange">Not resolved</span>
+							      	<span class="title">Complaint title</span> 
+							      	<span class="badge right status">Not resolved</span>
 							      </p>
-							      <div>Complaint description.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rhoncus fermentum mi at pharetra. Aliquam tristique eros faucibus finibus facilisis.
+							      <div class="complaint_description">Complaint description.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rhoncus fermentum mi at pharetra. Aliquam tristique eros faucibus finibus facilisis.
 							      </div>
 							      <div class="complaint-btns m-t-20">
 								      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10">
 								      	<span class="badge">1200</span>
-								      	<i class="material-icons text-white">thumb_up</i>
+								      	<i class="material-icons text-white upvote">thumb_up</i>
 								      </a>
 								      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10" disabled>
 								      	<span class="badge">100</span>
-								      	<i class="material-icons text-white ">thumb_down</i>
+								      	<i class="material-icons text-white downvote">thumb_down</i>
 								      </a>
-								      <a class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white" >
-								      	Solve this problem.
-								      </a>						      
-								  </div>					      
-							    </div>
-							  </div>
-							</div>
-						</div>
-						<div class="col m-t-20">
-							<div class="card horizontal">
-
-							  <div class="card-stacked">
-							    <div class="card-content fs-20">
-							      <p class="complaint-title fs-24">
-							      	<span class=="title">Complaint title</span> 
-							      	<span class="badge right red">Query</span>
-							      	<span class="badge right green">Lost</span>
-							      	<span class="badge right orange">Not resolved</span>
-							      </p>
-							      <div>Complaint description.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rhoncus fermentum mi at pharetra. Aliquam tristique eros faucibus finibus facilisis.
-							      </div>
-							      <div class="complaint-btns m-t-20">
-								      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10">
-								      	<span class="badge">1200</span>
-								      	<i class="material-icons text-white">thumb_up</i>
-								      </a>
-								      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10" disabled>
-								      	<span class="badge">100</span>
-								      	<i class="material-icons text-white ">thumb_down</i>
-								      </a>
-								      <a class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white" >
+								      <a class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" >
 								      	Solve this problem.
 								      </a>						      
 								  </div>					      
