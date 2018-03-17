@@ -34,6 +34,7 @@ window.registerComplaint = function(form) {
     contractInstance.register_complaint(type_of_complaint, complaint_visibility, complaint, contact_info, crime_time,location,{gas: 1400000, from: web3.eth.accounts[0]})
     .then(function(){
       console.log("Complaint registered");
+      displayComplaints();
     })
     .catch(function(){
       console.log("Complaint failed");
@@ -62,7 +63,54 @@ window.displayComplaints = function(){
         }
         complaints[i]=obj;
       }
-      console.log(complaints);
+      var status='Pending';
+      var stakes=0;
+      var id=0
+      var total_str='';
+      for(var key in complaints){
+        let address = complaints[key].admin;
+        let title = complaints[key].title;
+        let contact_info = complaints[key].contact_info;
+        let visibility = complaints[key].visibility;
+        let type_of_complaint = complaints[key].type_of_complaint;
+        let crime_date = complaints[key].crime_time;
+        console.log(complaints[key]);
+        var str = `
+            <div class="col m-t-20 complaint_card">
+              <div class="card horizontal">
+                <div class="card-stacked">
+                  <div class="card-content fs-20">
+                    <p class="complaint-title fs-24">
+                      <span class="title">${crime_date}</span> 
+                      <span class="badge right status">${status}</span>
+
+                    </p>
+                    <div class="complaint_description">${title}
+                    <div class="complaint-btns m-t-20">
+                      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10">
+                        <span class="badge">Total stake : ${stakes}</span>
+                        <i class="material-icons text-white upvote">thumb_up</i>
+                      </a>
+                      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10">
+                        <span class="badge">1200</span>
+                        <i class="material-icons text-white upvote">thumb_up</i>
+                      </a>
+                      <a class="waves-effect waves-teal btn-flat red m-r-10 m-t-10" disabled>
+                        <span class="badge">100</span>
+                        <i class="material-icons text-white downvote">thumb_down</i>
+                      </a>
+                      <a data=${id} data2=${address} class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" >
+                        Solve this problem.
+                      </a>                  
+                  </div>                
+                  </div>
+                </div>
+              </div>
+            </div>
+            `;
+          total_str += str;
+      }
+      $('.complaints').html(total_str);
     })
   })
 }
