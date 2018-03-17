@@ -39,7 +39,7 @@ contract Reporter {
 
     //Police officials list
     address[] police_list;
-    police_list[0] = '0x870d3e9c4e7edce6436bc5c3d4194967155616ae';;
+    police_list[0] = '0x870d3e9c4e7edce6436bc5c3d4194967155616ae';
     police_list[1] = '0x08eebb4fd9b3436baf4cadb9105b73acc015ee65';
 
     //All complaints

@@ -195,6 +195,12 @@ window.policeReturnProcessRequest = function(){
   })
 }
 
+function accept_complain(tar){
+  console.log(tar);
+  var address = web3.eth.accounts[0];
+
+}
+
 window.displayMyComplaints = function(){
 
   console.log("HEllo");
@@ -287,5 +293,8 @@ $( document ).ready(function() {
 
   Reporter.setProvider(web3.currentProvider);
   console.log(web3.currentProvider);
+  $('accept_complaint').click(function(event){
+    accept_complaint(event.target);
+  })
 
 });
