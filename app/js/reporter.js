@@ -289,33 +289,51 @@ window.loginUport = function(){
 
 
 window.registerComplaint = function(form) {
-  console.log("Inside register Complaint");
-  
-  let complaint = $('#complaint').val();
-  let contact_info = $('#contact_info').val();
-  let crime_date = $("#crime_date").val();
-  let type_of_complaint = $("#type_of_complaint").val();
-  let complaint_visibility = $('#complaint_visibility').val() === 'on'?1:0;
-  let documents = $('#documents').val();
-  let time_of_crime = $('#time_of_crime').val();
-  let admin = decodedId;
-  let tags = '';
-  let location = '';
-  console.log(complaint, contact_info, crime_date, type_of_complaint, complaint_visibility, documents, time_of_crime);
-  return false;
-  reporterInstance.register_complaint(type, visibility, admin, title, (error, txHash) => {
-    if (error) { throw error }
-       waitForMined(txHash, { blockNumber: null }, // see next area
-    function pendingCB () {
-      // Signal to the user you're still waiting
-      console.log("MIning");
-      // for a block confirmation
-    },
-    function successCB (data) {
-      // Great Success!
-      console.log("Registered");
-      // Likely you'll call some eventPublisherMethod(txHash, data)
+
+  const reader = new FileReader();
+  reader.onloadend = function() {
+    const ipfs = window.IpfsApi('159.65.144.151', 5001) // Connect to IPFS
+    const buf = buffer.Buffer(reader.result) // Convert data into buffer
+    ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
+      if(err) {
+        console.error(err)
+        return
+      }
+      let url = `https://ipfs.io/ipfs/${result[0].hash}`
+      console.log(result[0].hash);
+      let documents = result[0].hash;
+      console.log("Inside register Complaint");
+      let complaint = $('#complaint').val();
+      let contact_info = $('#contact_info').val();
+      let crime_date = $("#crime_date").val();
+      let type_of_complaint = $("#type_of_complaint").val();
+      let complaint_visibility = $('#complaint_visibility').val() === 'on'?1:0;
+      let time_of_crime = $('#time_of_crime').val();
+      let admin = decodedId;
+      let tags = '';
+      let location = '';
+      console.log(documents);
+      //console.log(complaint, contact_info, crime_date, type_of_complaint, complaint_visibility, documents, time_of_crime);
+      return false;
+      // reporterInstance.register_complaint(type, visibility, admin, title, (error, txHash) => {
+      //   if (error) { throw error }
+      //      waitForMined(txHash, { blockNumber: null }, // see next area
+      //   function pendingCB () {
+      //     // Signal to the user you're still waiting
+      //     console.log("MIning");
+      //     // for a block confirmation
+      //   },
+      //   function successCB (data) {
+      //     // Great Success!
+      //     console.log("Registered");
+      //     // Likely you'll call some eventPublisherMethod(txHash, data)
+      //   })
+        
+      // })
+      
     })
-    
-  })
+  }
+  const photo = document.getElementById("documents");
+  reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
+
 }
