@@ -18,11 +18,11 @@ var Reporter = contract(reporter_artifacts);
 window.registerComplaint = function(form) {
   console.log(form);
   let complaint = $('#complaint').val();
-  let contact_info = $('#contact_info').val();
-  let crime_date = $('#crime_date').val();
+  let contact_info = parseInt($('#contact_info').val());
+ // let crime_date = 
   let type_of_complaint = parseInt($('#type_of_complaint').val());
   let complaint_visibility = $('#complaint_visibility').val() == 'on'?1:0;
-  let crime_time = $('#time_of_crime').val();
+  let crime_time = $('#crime_date').val();
   let location = 'allahabad'; 
   let admin = '0x627306090abaB3A6e1400e9345bC60c78a8BEf57';
   console.log(type_of_complaint, complaint_visibility, admin, complaint, contact_info, crime_time);
@@ -45,7 +45,7 @@ window.displayComplaints = function(){
 
   console.log("HEllo");
   let $div = $("#div");
-  let fields = ['id', 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'location'];
+  let fields = [ 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'crime_time'];
   let complaints = {};
   Reporter.deployed().then(function(contractInstance){
     contractInstance.get_all_complaints.call()
@@ -56,7 +56,7 @@ window.displayComplaints = function(){
         for(let j=0;j<fields.length;j++){
 
           obj[fields[j]] = res[j][i].toString();
-            if(j==6 || j==2)
+            if(j==5 || j==1)
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
 
         }
