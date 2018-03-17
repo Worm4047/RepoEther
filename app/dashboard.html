@@ -15,7 +15,10 @@
   	<link rel="stylesheet" href="./css/dashboard.css">
 
     <script src="https://www.thomasfrank.se/sessvars.js"></script>
-
+        <script src="https://wzrd.in/standalone/buffer"></script>
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
+    integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
+    crossorigin="anonymous"></script>
 
 
 </head>
@@ -60,12 +63,15 @@
     		<div class="file-field input-field">
       			<div class="btn">
         		<span>Upload Evidence</span>
-        		<input type="file" >
+        		<input type="file" id="documents" name="documents">
       			</div>
      		 <div class="file-path-wrapper">
         			<input class="file-path validate" type="text" id="documents">
       		</div>
-    		</div>
+      	
+    		</div>	
+<div><button onclick="getLocation()">Try It</button></div>
+    		
 
     		<label for="crime-time">Time of Crime</label>
     		 <input type="text" class="timepicker" id="time_of_crime">
@@ -186,6 +192,26 @@
 	
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
+	<script>
+
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        console.log("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+    console.log(position.coords.latitude);
+
+}
+</script>
+
+
+
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   	<script>
@@ -215,10 +241,14 @@
     aftershow: function(){} //Function for after opening timepicker
   });
   	</script>
-  	 <script src="app.js"></script>
+  	 
   	 <script type="text/javascript">
   	 console.log(sessvars.userProfile );
   	 </script>
+
+
+<script src="app.js"></script>
+
 	<!-- <script src="js/main.js"></script> -->
 
 </body>

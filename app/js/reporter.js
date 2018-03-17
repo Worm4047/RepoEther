@@ -289,6 +289,28 @@ window.loginUport = function(){
 
 
 window.registerComplaint = function(form) {
+
+        const reader = new FileReader();
+      reader.onloadend = function() {
+        const ipfs = window.IpfsApi('159.65.144.151', 5001) // Connect to IPFS
+        const buf = buffer.Buffer(reader.result) // Convert data into buffer
+        ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
+          if(err) {
+            console.error(err)
+            return
+          }
+          let url = `https://ipfs.io/ipfs/${result[0].hash}`
+          //console.log(`Url --> ${url}`)
+
+          console.log(result[0].hash);
+          let documents = result[0].hash;
+          
+        })
+      }
+      const photo = document.getElementById("documents");
+      reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
+
+
   console.log("Inside register Complaint");
   
   let complaint = $('#complaint').val();
@@ -296,12 +318,13 @@ window.registerComplaint = function(form) {
   let crime_date = $("#crime_date").val();
   let type_of_complaint = $("#type_of_complaint").val();
   let complaint_visibility = $('#complaint_visibility').val();
-  let documents = $('#documents').val();
+  
   let time_of_crime = $('#time_of_crime').val();
   let admin = decodedId;
   let tags = '';
   let location = '';
-  console.log(complaint, contact_info, crime_date, type_of_complaint, complaint_visibility, documents, time_of_crime);
+  console.log(documents);
+  //console.log(complaint, contact_info, crime_date, type_of_complaint, complaint_visibility, documents, time_of_crime);
   return false;
   reporterInstance.register_complaint(type, visibility, admin, title, (error, txHash) => {
     if (error) { throw error }
