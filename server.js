@@ -21,3 +21,7 @@ router.get('/dashboard.html', function (req, res) {
 router.get('/my_complaints.html', function (req, res) {
   res.render('my_complaints.html');
 })
+
+router.get('/map.html', function (req, res) {
+  res.render('map.html');
+})

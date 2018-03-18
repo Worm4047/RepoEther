@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+	<title>Dashboard</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  	<link rel="stylesheet" href="./css/main.css">
+  	<link rel="stylesheet" href="./css/util.css">
+  	<link rel="stylesheet" href="./css/dashboard.css">
+
+    <script src="https://www.thomasfrank.se/sessvars.js"></script>
+    <script src="https://wzrd.in/standalone/buffer"></script>
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"></script>
+	<style>
+	/* Always set the map height explicitly to define the size of the div
+	* element that contains the map. */
+	#map {
+	height: 100%;
+  margin: 5%;
+	}
+	/* Optional: Makes the sample page fill the window. */
+	html, body {
+	height: 100%;
+	margin: 0;
+
+	padding: 0;
+	}
+	</style>
+
+</head>
+<body>
+		<nav>
+		<div class="nav-wrapper p-l-20 p-r-20">
+		  <a href="/" class="brand-logo">RepoEther</a>
+		  <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+		  <ul class="right hide-on-med-and-down">
+		    <li><a class="waves-effect waves-light fs-22 modal-trigger" href="#complaint-filing">File a complaint</a></li>
+		    <li><a class="waves-effect waves-light fs-22">Your complaints</a></li>
+		  </ul>
+		  <ul class="side-nav" id="mobile-demo">
+		    <li class="p-t-20"><a class="waves-effect waves-light fs-22 modal-trigger" href="#complaint-filing>File a complaint</a></li>
+		    <li class="p-t-20"><a class="waves-effect waves-light fs-22">Your complaints</a></li>
+		  </ul>
+		</div>
+	</nav>
+    <div id="map" ></div>
+    <script>
+      function initMap() {
+        // Styles a map in night mode.
+         var myLatLng = [[25.473, 81.80, "Murder"],
+         				[25.55,81.89, "Theft"],
+         				[25.41,81.99, "Theft"],
+         				[25.47,81.75, "Accident"],
+         				[25.68,81.78, "Theft"],
+         				[25.57,81.90, "Accident"] ]						;
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 25.4920, lng: 81.8639},//25.4920° N, 81.8639° E
+          zoom: 12,
+          styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
+        });
+
+        var marker;
+           for (i = 0; i < myLatLng.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(myLatLng[i][0], myLatLng[i][1]),
+        label: {text: myLatLng[i][2], color: 'white'},
+        map: map
+      });
+
+
+  //         var marker = new google.maps.Marker({
+  //   position: myLatLng,
+  //   map: map,
+  //   title: 'Hello World!'
+  // });
+      }
+  }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7HdmNcDKB0G6yQx8jn2l2L9HtqoNHHmU&callback=initMap">
+    </script>
+	
+	
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+	<script src="app.js"></script>
+	<!-- <script src="js/main.js"></script> -->
+</body>
+</html>
