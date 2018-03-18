@@ -129,6 +129,14 @@ contract Reporter {
         all_complaints[id].upvotes += msg.value;
     }
 
+    function accept_complaint(uint id) public{
+        all_complaints[id].status = 1;//pending
+    }
+    function close_complaint(uint id) public{
+        all_complaints[id].status = 2;
+        
+    }
+
     // function returnTotalStakes(uint id) public {
     //     uint256 totalStakes = 0;
     //     for(uint i = 0 ; i < complaint_stakes[id].length ; i++){

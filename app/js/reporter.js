@@ -57,6 +57,41 @@ window.upvote = function(){
   })
 }
 
+
+
+window.accept_complaint = function(){
+  if(sessvars.isPolice == 0)
+    alert('Only police allowed !!!!');
+  var id = $('.accept_complaint').attr('data');
+  Reporter.deployed().then(function(contractInstance){
+    contractInstance.accept_complaint(id, {gas: 1400000, from: web3.eth.accounts[0]})
+    .then(function(){
+      console.log("Accepted");
+      location.reload();
+    })
+    .catch(function(){
+      console.log("Failed to accept");
+    })
+  })
+}
+
+window.close_complaint = function(){
+  if(sessvars.isPolice == 0)
+    alert('Only police allowed !!!!');
+  var id = $('.close_complaint').attr('data');
+  Reporter.deployed().then(function(contractInstance){
+    contractInstance.close_complaint(id, {gas: 1400000, from: web3.eth.accounts[0]})
+    .then(function(){
+      console.log("Closed");
+      location.reload();
+    })
+    .catch(function(){
+      console.log("Failed to close");
+    })
+  })
+}
+
+
 window.displayComplaints = function(){
 
   console.log("HEllo");
@@ -93,8 +128,14 @@ window.displayComplaints = function(){
         let visibility = complaints[key].visibility;
         // let type_of_complaint = complaints[key].type_of_complaint;
         let crime_date = complaints[key].crime_time;
-        let status = complaints[key].status;
+        let status = complaints[key].status == 1?'In process':'Pending';
         let upvotes = complaints[key].upvotes;
+        let display_accept = '';
+        if(complaints[key].status == 1 ||  complaints[key].status == 2)
+          display_accept = 'none';
+        let display_close = '';
+        if(complaints[key].status == 1 ||  complaints[key].status == 0)
+          display_close = 'none';
         console.log(complaints[key]);
         var str = `
             <div class="col m-t-20 complaint_card">
@@ -117,13 +158,16 @@ window.displayComplaints = function(){
                           </div>
                     </div>
 
-                      <a data=${id} class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;">
+                      <a data=${id} onclick="accept_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;display:${display_accept}">
                         Solve this problem.
+                      </a>
+                      <a data=${id} onclick="close_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white close_complaint" style="border-radius:3px;display:${display_close}">
+                        Mark this problem closed.
                       </a>
                       <a data=${id}  onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
                         Upvote
                       </a> 
-                                            <a data=${id}   class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
+                      <a data=${id}   class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
                         Downvote
                       </a>                                         
                   </div>                
@@ -187,25 +231,31 @@ window.policeReturnProcessRequest = function(){
                     <div class="complaint_description">${title}</div>
                     <div class="complaint-btns m-t-20">
                           <div class="chip">
-                            Total stakes : ${stakes}
+                            Total stakes : ${upvotes}
                           </div>
                           <div class="chip">
                             Status : ${status}
                           </div>
                     </div>
 
-                      <a data=${id} data2=${address} class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;">
+                      <a data=${id} onclick="accept_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;display:${display_accept}">
                         Solve this problem.
                       </a>
-                      <a data=${id}  class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
-                        Add to stake.
+                      <a data=${id} onclick="close_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white close_complaint" style="border-radius:3px;display:${display_close}">
+                        Mark this problem closed.
+                      </a>
+                      <a data=${id}  onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
+                        Upvote
+                      </a> 
+                      <a data=${id}   class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
+                        Downvote
                       </a>                                         
                   </div>                
                   </div>
                 </div>
               </div>
             </div>
-            `;
+`;
           total_str += str;
           count=1;
       }
@@ -217,17 +267,14 @@ window.policeReturnProcessRequest = function(){
   })
 }
 
-function accept_complain(tar){
-  console.log(tar);
-  var address = web3.eth.accounts[0];
 
-}
 
 window.displayMyComplaints = function(){
 
-  console.log("HEllo");
+console.log("HEllo");
   let $div = $("#div");
-  let fields = [ 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'crime_time'];
+  let fields = [ 'title', 'contact_info', 'upvotes', 'visibility', 'status', 'crime_time'];
+  let fields2 = ['upvotes', 'status']
   let complaints = {};
   Reporter.deployed().then(function(contractInstance){
     contractInstance.get_all_complaints.call()
@@ -238,7 +285,7 @@ window.displayMyComplaints = function(){
         for(let j=0;j<fields.length;j++){
 
           obj[fields[j]] = res[j][i].toString();
-            if(j==5 || j==1)
+            if(j==5 || j==0)
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
 
         }
@@ -249,6 +296,7 @@ window.displayMyComplaints = function(){
       var id=0
       var total_str='';
       var count=0;
+
       console.log(complaints);
       for(var key in complaints){
         let address = complaints[key].admin;
@@ -258,8 +306,7 @@ window.displayMyComplaints = function(){
         let type_of_complaint = complaints[key].type_of_complaint;
         let crime_date = complaints[key].crime_time;
         console.log(complaints[key]);
-        var str = `
-            <div class="col m-t-20 complaint_card">
+        var str =             `<div class="col m-t-20 complaint_card">
               <div class="card horizontal">
                 <div class="card-stacked">
                   <div class="card-content fs-20">
@@ -272,18 +319,24 @@ window.displayMyComplaints = function(){
                     <div class="complaint_description">${title}</div>
                     <div class="complaint-btns m-t-20">
                           <div class="chip">
-                            Total stakes : ${stakes}
+                            Total stakes : ${upvotes}
                           </div>
                           <div class="chip">
                             Status : ${status}
                           </div>
                     </div>
 
-                      <a data=${id} data2=${address} class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;">
+                      <a data=${id} onclick="accept_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;display:${display_accept}">
                         Solve this problem.
                       </a>
-                      <a data=${id}  class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
-                        Add to stake.
+                      <a data=${id} onclick="close_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white close_complaint" style="border-radius:3px;display:${display_close}">
+                        Mark this problem closed.
+                      </a>
+                      <a data=${id}  onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
+                        Upvote
+                      </a> 
+                      <a data=${id}   class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
+                        Downvote
                       </a>                                         
                   </div>                
                   </div>
