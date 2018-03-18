@@ -131,12 +131,13 @@ window.displayComplaints = function(){
         let status = complaints[key].status == 1?'In process':'Pending';
         let upvotes = complaints[key].upvotes;
         let display_accept = '';
-        if(complaints[key].status == 1 ||  complaints[key].status == 2)
+        if(complaints[key].status == 1 ||  complaints[key].status == 2 || sessvars.isPolice == 0)
           display_accept = 'none';
         let display_close = '';
-        if(complaints[key].status == 1 ||  complaints[key].status == 0)
+        if(complaints[key].status == 1 ||  complaints[key].status == 0 || sessvars.isPolice == 0)
           display_close = 'none';
-        console.log(complaints[key]);
+        // console.log(complaints[key]);
+        console.log(upvotes);
         var str = `
             <div class="col m-t-20 complaint_card">
               <div class="card horizontal">
@@ -372,13 +373,13 @@ $( document ).ready(function() {
     accept_complaint(event.target);
   })
 
-  sessvars.policeAccount = '0x8bc74771b0290810845b21e976dd8ab7b3a551e6';
+  sessvars.policeAccount = '0x94e315379bcaB498dba7358cE0a445e78199Be8D';
   if(sessvars.policeAccount == web3.eth.accounts[0]){
     alert('Logged in as police');
     sessvars.isPolice=1;
   }
   else{
-    alert('LOgged in as user'); 
+    console.log('LOgged in as user'); 
     sessvars.isPolice=0;
   }
 });
