@@ -42,11 +42,27 @@ window.registerComplaint = function(form) {
   })
 }
 
+window.upvote = function(){
+
+  var id = $('.upvote_class').attr('data');
+  Reporter.deployed().then(function(contractInstance){
+    contractInstance.upvote(id,{gas: 1400000, from: web3.eth.accounts[0],value:web3.toWei(0.00000001, "ether")})
+    .then(function(){
+      console.log("Upvoted");
+      location.reload();
+    })
+    .catch(function(){
+      console.log("Failed to upvote");
+    })
+  })
+}
+
 window.displayComplaints = function(){
 
   console.log("HEllo");
   let $div = $("#div");
-  let fields = [ 'admin', 'title', 'contact_info', 'type_of_complaint', 'visibility', 'crime_time'];
+  let fields = [ 'title', 'contact_info', 'upvotes', 'visibility', 'status', 'crime_time'];
+  let fields2 = ['upvotes', 'status']
   let complaints = {};
   Reporter.deployed().then(function(contractInstance){
     contractInstance.get_all_complaints.call()
@@ -57,7 +73,7 @@ window.displayComplaints = function(){
         for(let j=0;j<fields.length;j++){
 
           obj[fields[j]] = res[j][i].toString();
-            if(j==5 || j==1)
+            if(j==5 || j==0)
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
 
         }
@@ -68,14 +84,17 @@ window.displayComplaints = function(){
       var id=0
       var total_str='';
       var count=0;
+
       console.log(complaints);
       for(var key in complaints){
-        let address = complaints[key].admin;
+        // let address = complaints[key].admin;
         let title = complaints[key].title;
         let contact_info = complaints[key].contact_info;
         let visibility = complaints[key].visibility;
-        let type_of_complaint = complaints[key].type_of_complaint;
+        // let type_of_complaint = complaints[key].type_of_complaint;
         let crime_date = complaints[key].crime_time;
+        let status = complaints[key].status;
+        let upvotes = complaints[key].upvotes;
         console.log(complaints[key]);
         var str = `
             <div class="col m-t-20 complaint_card">
@@ -91,18 +110,21 @@ window.displayComplaints = function(){
                     <div class="complaint_description">${title}</div>
                     <div class="complaint-btns m-t-20">
                           <div class="chip">
-                            Total stakes : ${stakes}
+                            Total stakes : ${upvotes}
                           </div>
                           <div class="chip">
                             Status : ${status}
                           </div>
                     </div>
 
-                      <a data=${id} data2=${address} class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;">
+                      <a data=${id} class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white accept_complaint" style="border-radius:3px;">
                         Solve this problem.
                       </a>
-                      <a data=${id}  class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
-                        Add to stake.
+                      <a data=${id}  onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
+                        Upvote
+                      </a> 
+                                            <a data=${id}   class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
+                        Downvote
                       </a>                                         
                   </div>                
                   </div>
@@ -297,4 +319,13 @@ $( document ).ready(function() {
     accept_complaint(event.target);
   })
 
+  sessvars.policeAccount = '0x8bc74771b0290810845b21e976dd8ab7b3a551e6';
+  if(sessvars.policeAccount == web3.eth.accounts[0]){
+    alert('Logged in as police');
+    sessvars.isPolice=1;
+  }
+  else{
+    alert('LOgged in as user'); 
+    sessvars.isPolice=0;
+  }
 });

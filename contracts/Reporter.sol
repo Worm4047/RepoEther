@@ -20,7 +20,7 @@ contract Reporter {
         string proposed_solution;
         // bytes32 documents;
         uint status;//0-> pending/open 1-> in process 2->closed/resolved
-        uint256 upvotes;
+        uint upvotes;
         bytes32 solved_by; //adhaar_card of person who solved it
         bytes32 location;//In the form of longitude latitude
         bytes32 date_of_crime;
@@ -61,25 +61,27 @@ contract Reporter {
   //address addr = bytesToAddress("0x5794ff959eb9c6a2afe82f8ed30e0973b40c8842");
 
     //Getter for all_complaints
-    function get_all_complaints() public returns (address[], bytes32[],uint[], uint[], uint[], bytes32[]){
+    function get_all_complaints() public returns (bytes32[],uint[], uint[], uint[],uint[], bytes32[]){
         bytes32[] memory title = new bytes32[](all_complaints.length);
         uint[] memory contact_info = new uint[](all_complaints.length);
-        uint[] memory type_of_complaint = new uint[](all_complaints.length);
+        uint[] memory upvotes = new uint[](all_complaints.length);
         uint[] memory visibility = new uint[](all_complaints.length);
         bytes32[] memory crime_time = new bytes32[](all_complaints.length);
-        address[] memory admin = new address[](all_complaints.length);
+        // address[] memory admin = new address[](all_complaints.length);
+        uint[] memory status = new uint[](all_complaints.length);
         for(uint i=0;i<all_complaints.length;i++){
             Complaint storage c = all_complaints[i];
             //id[i] = c.id;
             title[i] = c.complaint;
             contact_info[i] = c.contact_info;
-            type_of_complaint[i] = c.type_of_complaint;
+            upvotes[i] = c.upvotes;
             visibility[i] = c.visibility;
+            status[i] = c.status;
          //   location[i] = c.location;
             crime_time[i] = c.crime_time;
         }
 
-        return(admin, title, contact_info, type_of_complaint, visibility, crime_time);
+        return(title, contact_info, upvotes, visibility, status, crime_time);
     }
     
 // uint id,string documents,uint type_of_complaint, uint visibility,  bytes32 admin, string title, string contact_info, string address_info, uint256 time, string location
@@ -107,18 +109,25 @@ contract Reporter {
 
     }
 
+    function get_upvotes_status(uint id) public returns(uint[], uint[]){
+        uint[] memory upvotes = new uint[](all_complaints.length);
+        uint[] memory status = new uint[](all_complaints.length);
+        for(uint i=0;i<all_complaints.length;i++){
+            Complaint storage c = all_complaints[i];
+            upvotes[i] = c.upvotes;
+            status[i] = c.status;
+        }       
+        return (upvotes, status);
+    }
+
     // function accept_complaint(address police, uint id) public{
     //     process_complaints[police].push(id);Complaint memory newcomplaint;
     //     all_complaints[id].status = 1;//in process
     // }
 
-    // function raise_stakes(address addr, uint id, uint amt, uint opinion){
-    //     Stake memory newstake;
-    //     newstake.addr = addr;
-    //     newstake.stake = 0;
-    //     newstake.opinion = opinion;
-    //     complaint_stakes[id] = newstake;
-    // }
+    function upvote(uint id) public payable{
+        all_complaints[id].upvotes += msg.value;
+    }
 
     // function returnTotalStakes(uint id) public {
     //     uint256 totalStakes = 0;
@@ -137,6 +146,8 @@ contract Reporter {
     // function closeComplain(address admin,uint id,uint status) public{
     //     all_complaints[id].status = status;
     // }
+
+
 
 
 }
