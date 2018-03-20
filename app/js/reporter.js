@@ -44,9 +44,10 @@ window.registerComplaint = function(form) {
 
 window.upvote = function(){
 
-  var id = $('.upvote_class').attr('data');
+  var id = 0;
   Reporter.deployed().then(function(contractInstance){
-    contractInstance.upvote(id,{gas: 1400000, from: web3.eth.accounts[0],value:web3.toWei(0.00000001, "ether")})
+    //assuming opinion 1 for now
+    contractInstance.upvote(id,1,{gas: 1400000, from: web3.eth.accounts[0],value:web3.toWei(1, "ether")})
     .then(function(){
       console.log("Upvoted");
       location.reload();
@@ -57,7 +58,21 @@ window.upvote = function(){
   })
 }
 
+window.downvote = function(){
 
+  var id = 0;
+  Reporter.deployed().then(function(contractInstance){
+    //assuming opinion 1 for now
+    contractInstance.downvote(id,0,{gas: 1400000, from: web3.eth.accounts[0],value:web3.toWei(1, "ether")})
+    .then(function(){
+      console.log("downvoted");
+      location.reload();
+    })
+    .catch(function(){
+      console.log("Failed to downvote");
+    })
+  })
+}
 
 window.accept_complaint = function(){
   if(sessvars.isPolice == 0)
@@ -87,6 +102,28 @@ window.close_complaint = function(){
     })
     .catch(function(){
       console.log("Failed to close");
+    })
+  })
+}
+
+window.refund_amount = function(){
+  console.log("Inside refund_amount");
+  Reporter.deployed().then(function(contractInstance){
+    contractInstance.process_refund.call(0, 1, {gas: 1400000, from: web3.eth.accounts[0]})
+    .then(function(res){
+      console.log(res.toString());
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  })
+}
+
+window.display_votes = function() {
+   console.log("Inside display_amount");
+  Reporter.deployed().then(function(contractInstance){
+    contractInstance.return_votes.call(0, {gas: 1400000, from: web3.eth.accounts[0]}).then(function(res){
+      console.log(res);
     })
   })
 }
@@ -168,7 +205,7 @@ window.displayComplaints = function(){
                       <a data=${id}  onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
                         Upvote
                       </a> 
-                      <a data=${id}   class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white add_to_stake"  style="border-radius:3px;">
+                      <a data=${id}  onclick="downvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white downvote_class"  style="border-radius:3px;">
                         Downvote
                       </a>                                         
                   </div>                

@@ -4,13 +4,15 @@ pragma experimental ABIEncoderV2;
 contract Reporter {
 
     struct Stake{
-        uint id;
+        address user;
         uint value;
         uint opinion; //1=>in support of , 0 => against
     }
 
 
     mapping(uint => Stake[]) complaint_stakes;
+
+
     struct Complaint {
         uint id;
         address admin; //adhaar card of person registering complaint.
@@ -36,16 +38,10 @@ contract Reporter {
     mapping(address => uint[]) public process_complaints; //under me
 
 
-
-    //Police officials list
-    // address[] police_list;
-    // police_list[0] = '0x870d3e9c4e7edce6436bc5c3d4194967155616ae';
-    // police_list[1] = '0x08eebb4fd9b3436baf4cadb9105b73acc015ee65';
-
     //All complaints
     Complaint[] all_complaints;
 
-     function bytesToAddress(bytes _address) public returns (address) {
+    function bytesToAddress(bytes _address) public returns (address) {
     uint160 m = 0;
     uint160 b = 0;
 
@@ -87,7 +83,7 @@ contract Reporter {
 // uint id,string documents,uint type_of_complaint, uint visibility,  bytes32 admin, string title, string contact_info, string address_info, uint256 time, string location
     function register_complaint(uint type_of_complaint, uint visibility, bytes32 complaint, uint contact_info, bytes32 crime_time, bytes32 location) public payable{
         Complaint memory newcomplaint;
-        uint id = all_complaints.length+1;
+        uint id = all_complaints.length + 1;
         newcomplaint.id = id;
         newcomplaint.admin = msg.sender;
         newcomplaint.complaint = bytes32(complaint);
@@ -125,8 +121,23 @@ contract Reporter {
     //     all_complaints[id].status = 1;//in process
     // }
 
-    function upvote(uint id) public payable{
+    function upvote(uint id, uint opinion) public payable{
         all_complaints[id].upvotes += msg.value;
+        //add to complaint_stakes and totalStakes;
+        Stake memory stake;
+        stake.user = msg.sender;
+        stake.value = msg.value;
+        stake.opinion = opinion;
+        complaint_stakes[id].push(stake);
+    }
+
+    function downvote(uint id, uint opinion) public payable{
+        all_complaints[id].upvotes += msg.value;
+        Stake memory stake;
+        stake.user = msg.sender;
+        stake.value = msg.value;
+        stake.opinion = opinion;
+        complaint_stakes[id].push(stake);        
     }
 
     function accept_complaint(uint id) public{
@@ -137,13 +148,52 @@ contract Reporter {
         
     }
 
-    // function returnTotalStakes(uint id) public {
-    //     uint256 totalStakes = 0;
-    //     for(uint i = 0 ; i < complaint_stakes[id].length ; i++){
-    //         totalStakes += complaint_stakes[id][i].value;
-    //     } 
-    //     return totalStakes;
-    // }
+    function returnTotalStakes(uint id) public returns(uint) {
+        uint256 totalStakes = 0;
+        for(uint i=0;i<complaint_stakes[id].length;i++) {
+            totalStakes += complaint_stakes[id][i].value;
+        }
+        return totalStakes;
+    }
+
+    function return_votes(uint id) public returns(address[]){
+     address [] all;
+     if(id == complaint_stakes[id].length)
+        return all;
+     for(uint i=0;i<complaint_stakes[id].length;i++){
+        if(complaint_stakes[id][i].opinion == 1)
+            all.push(complaint_stakes[id][i].user);
+     }   
+     return all;
+    }
+
+    function process_refund(uint id, uint actual_opinion) public returns(uint ) {
+        address [] correct_guess;
+        uint amt = 1;
+        address addr = 0x5794fF959EB9C6a2aFE82F8Ed30e0973B40c8842;
+        if(!addr.send(amt)){
+            throw;
+        }
+        // uint extra_refund=0;
+        // uint right_guess_count=0;
+        // for(uint i=0;i<complaint_stakes[id].length;i++){
+        //     if(complaint_stakes[id][i].opinion == 1){
+        //         correct_guess.push(complaint_stakes[id][i].user);
+        //         right_guess_count++;
+        //         extra_refund = 1;
+        //         if(complaint_stakes[id][i].user.send(extra_refund)){
+        //             extra_refund = 3;
+        //             return extra_refund;
+        //         }
+        //     }
+        //     else{
+        //         extra_refund += complaint_stakes[id][i].value;
+        //     }
+        // }
+        // for(i=0;i<correct_guess.length;i++){
+        //     correct_guess[i].send(extra_refund/right_guess_count);
+        // }
+    }
 
     // function proposed_solution(bytes32 proposed_solution,uint id) public{
     //     solved_by = bytes32(msg.sender);
