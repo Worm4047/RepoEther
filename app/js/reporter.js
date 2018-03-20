@@ -109,7 +109,7 @@ window.close_complaint = function(){
 window.refund_amount = function(){
   console.log("Inside refund_amount");
   Reporter.deployed().then(function(contractInstance){
-    contractInstance.process_refund.call(0, 1, {gas: 1400000, from: web3.eth.accounts[0]})
+    contractInstance.process_refund.call(0, 1, {from: web3.eth.accounts[0]})
     .then(function(res){
       console.log(res.toString());
     })
@@ -147,7 +147,6 @@ window.displayComplaints = function(){
           obj[fields[j]] = res[j][i].toString();
             if(j==5 || j==0)
             obj[fields[j]] = web3.toAscii(obj[fields[j]]);
-
         }
         complaints[i]=obj;
       }
@@ -156,8 +155,6 @@ window.displayComplaints = function(){
       var id=0
       var total_str='';
       var count=0;
-
-      console.log(complaints);
       for(var key in complaints){
         // let address = complaints[key].admin;
         let title = complaints[key].title;
@@ -165,15 +162,23 @@ window.displayComplaints = function(){
         let visibility = complaints[key].visibility;
         // let type_of_complaint = complaints[key].type_of_complaint;
         let crime_date = complaints[key].crime_time;
-        let status = complaints[key].status == 1?'In process':'Pending';
+        let status = 'Pending';
+        if(complaints[key].status == 1)
+          status = 'In Process';
+        if(complaints[key].status == 2)
+          status = 'Resolved';
         let upvotes = complaints[key].upvotes;
-        let display_accept = '';
-        if(complaints[key].status == 1 ||  complaints[key].status == 2 || sessvars.isPolice == 0)
-          display_accept = 'none';
-        let display_close = '';
-        if(complaints[key].status == 1 ||  complaints[key].status == 0 || sessvars.isPolice == 0)
-          display_close = 'none';
+        let display_vote = '';
+        let display_accept = 'none';
+        console.log(complaints[key].status, sessvars.isPolice);
+        if(complaints[key].status == 0  && sessvars.isPolice == 1)
+          display_accept = '';
+        let display_close = 'none';
+        if(complaints[key].status == 1 && sessvars.isPolice == 1)
+          display_close = '';
         // console.log(complaints[key]);
+        if(complaints[key].status == 2)
+          display_vote = 'none';
         console.log(upvotes);
         var str = `
             <div class="col m-t-20 complaint_card">
@@ -202,10 +207,10 @@ window.displayComplaints = function(){
                       <a data=${id} onclick="close_complaint();return false;"class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white close_complaint" style="border-radius:3px;display:${display_close}">
                         Mark this problem closed.
                       </a>
-                      <a data=${id}  onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
+                      <a data=${id} style="display:${display_vote}" onclick="upvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white upvote_class"  style="border-radius:3px;">
                         Upvote
                       </a> 
-                      <a data=${id}  onclick="downvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white downvote_class"  style="border-radius:3px;">
+                      <a data=${id}  style="display:${display_vote}" onclick="downvote()" class="waves-effect waves-teal btn-flat blue m-r-10 m-t-10 text-white downvote_class"  style="border-radius:3px;">
                         Downvote
                       </a>                                         
                   </div>                
@@ -410,9 +415,12 @@ $( document ).ready(function() {
     accept_complaint(event.target);
   })
 
-  sessvars.policeAccount = '0x94e315379bcaB498dba7358cE0a445e78199Be8D';
-  if(sessvars.policeAccount == web3.eth.accounts[0]){
-    alert('Logged in as police');
+  //Police account
+  var policeAccount = '0X194653BA95D7E5F6FB66188693AD3B8FB7EE134E';
+  policeAccount = policeAccount.toLowerCase();
+  // console.log(policeAccount,web3.eth.accounts[0], !sessvars.policeAccount.localeCompare(web3.eth.accounts[0]));
+  if(!policeAccount.localeCompare(web3.eth.accounts[0])){
+    console.log('Logged in as police');
     sessvars.isPolice=1;
   }
   else{

@@ -9,7 +9,6 @@ contract Reporter {
         uint opinion; //1=>in support of , 0 => against
     }
 
-
     mapping(uint => Stake[]) complaint_stakes;
 
 
@@ -169,11 +168,12 @@ contract Reporter {
 
     function process_refund(uint id, uint actual_opinion) public returns(uint ) {
         address [] correct_guess;
-        uint amt = 1;
+        uint256 amt = 1000000000000000000;
         address addr = 0x5794fF959EB9C6a2aFE82F8Ed30e0973B40c8842;
-        if(!addr.send(amt)){
+        if(!msg.sender.send(amt)){
             throw;
         }
+        return amt;
         // uint extra_refund=0;
         // uint right_guess_count=0;
         // for(uint i=0;i<complaint_stakes[id].length;i++){
